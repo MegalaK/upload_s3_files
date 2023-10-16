@@ -122,5 +122,32 @@ def ingest_filewithtrailer(filename, primarypath, secondarypath, trailerfile):
         s3_client.upload_file(local_file_name, aws_bucket_name, aws_obj_name)
         time.sleep(4)
         s3_client_upload_file(trailerfile,aws_bucket_name,aws_obj_name1)
+    except botocore.exceptions.ClientError as e:
+        print(e)
+
+
+#Ingesting of memberroster file alone
+def ingest_memberroster(filename, primarypath):
+    s3_client=session.client('s3')
+
+    try:
+        print('Ingest member roster')
+        local_file_name=filename
+
+        aws_bucket_name=primarypath
+        aws_bucket_name1='provider/provider-intake/roster/'+filename
+
+        response=s3_client.upload_file(local_file_name,aws_bucket_name,aws_bucket_name1)
+        print(response)
+    except botocore.exceptions.ClientError as e:
+        print(e)
+
+#condition to pick specific file and path
+if "CUST" in PrescenceCheck:
+   list_bucket()
+   print("Patient file is getting Ingested")
+   
+        
+        
         
 
