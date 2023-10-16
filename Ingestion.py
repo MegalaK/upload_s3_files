@@ -79,4 +79,48 @@ def gluestatus(jobname):
         glue_client=session.client('glue')
         time.sleetp(10)
         response=glue_client.get_job_runs(JobName=jobname)
+        job_run=response['JobRuns'][0]
+
+        status = job_run['JobRunState']
+
+        starttime=job_run['StartedOn']
+        ingestion_time=job_run['CompletedOn']
+        run_id=job_run['Id']
+        current_time=datetime.now().replace(microsecond=0)
+        if ingestion_time>starttime:
+           print("Intestion is still in progress.Watiting.....")
+        print("File got uploaded Successfully. Ingestion is in progress.....")
+
+        while status not in ['SUCCEEDED','FAILED'];
+            response=glue_client.get_job_runs(JobName=jobname)
+            if 'JobRuns' not in response or len(response[JobRuns'])==0:
+                print("No job runs found")
+                return False
+            job_run=response['JobRuns'][0]
+            status=job_Run['JobRunState']
+            if status in [SUCCEEDED','FAILED']:
+                break
+
+       print("Ingestion Status:", status)
+       generate_html_report(jobname, status, starttime, ingestion_time, run_id, current_Time)
+       print(status)
+       return True
+ except botocore.exceptions.ParamValidationError as e:
+     print(e)
+
+#ingesting file with trailer file into specified folder
+def ingest_filewithtrailer(filename, primarypath, secondarypath, trailerfile):
+    s3_client=session.client('s3')
+
+    try:
+        local_file_name=filename
+        trailerfile=trailerfile
+        aws_bucket_name=primarypath
+        aws_obj_name=secondarypath+filename
+        aws_obj_name1=secondarypath+trailerfile
+        time.sleep(3)
+        s3_client.upload_file(local_file_name, aws_bucket_name, aws_obj_name)
+        time.sleep(4)
+        s3_client_upload_file(trailerfile,aws_bucket_name,aws_obj_name1)
+        
 
