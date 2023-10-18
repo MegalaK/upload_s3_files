@@ -146,7 +146,70 @@ def ingest_memberroster(filename, primarypath):
 if "CUST" in PrescenceCheck:
    list_bucket()
    print("Patient file is getting Ingested")
+   Jobname=ReadConfig.getData('Path of the file','customerglue')
+   primarypath=ReadConfig.getData('Path of the file','customeringestion1')
+   secondarypath=ReadConfig.getData('Path of the file','customeringestion2')
+   ingest_file=ReadConfig.getData("Path of the file","fileheader"),primarypath,secondarypath)
+   move_old_reports=ReadConfig.getData('Path of the file','report_path'),ReadConfig.getData('Path of the file','destination_path'))
+   gluestatus(Jobname)
+
+elif "COV" in PrescenceCheck:
+   list_bucket()
+   print("Patient file is getting Ingested")
+   Jobname=ReadConfig.getData('Path of the file','coverageglue')
+   primarypath=ReadConfig.getData('Path of the file','coverageingestion1')
+   secondarypath=ReadConfig.getData('Path of the file','coverageingestion2')
+   ingest_file=ReadConfig.getData("Path of the file","fileheader"),primarypath,secondarypath)
+   move_old_reports=ReadConfig.getData('Path of the file','report_path'),ReadConfig.getData('Path of the file','destination_path'))
+   gluestatus(Jobname)
+
+elif "med_adherence" in PrescenceCheck:
+   list_bucket()
+   print("Patient file is getting Ingested")
+   Jobname=ReadConfig.getData('Path of the file','medadherenceglue')
+   primarypath=ReadConfig.getData('Path of the file','memberrosteringestion1_rt')
+   secondarypath=ReadConfig.getData('Path of the file','medadherence1')
+   ingest_file=ReadConfig.getData("Path of the file","fileheader"),primarypath,secondarypath)
+   move_old_reports=ReadConfig.getData('Path of the file','report_path'),ReadConfig.getData('Path of the file','destination_path'))
+   gluestatus(Jobname)
+
+elif "RXC" in PrescenceCheck:
+   list_bucket_Trl()
+   print("Rxclaim")
+   Jobname=ReadConfig.getData('Path of the file','Rxclaimglue')
+   primarypath=ReadConfig.getData('Path of the file','rxclaimingestion1_rt')
+   secondarypath=ReadConfig.getData('Path of the file','rxclaimingestion2')
+   ingest_file=ReadConfig.getData("Path of the file","fileheader"),primarypath,secondarypath,ReadConfig.getData("Path of the file","trailerheader"))
+   move_old_reports=ReadConfig.getData('Path of the file','report_path'),ReadConfig.getData('Path of the file','destination_path'))
+   gluestatus(Jobname)
    
+elif "CLM" in PrescenceCheck:
+   list_bucket_Trl()
+   print("Medical Claims")
+   Jobname=ReadConfig.getData('Path of the file','medicalclaimsglue')
+   primarypath=ReadConfig.getData('Path of the file','customeringestion1_rt')
+   secondarypath=ReadConfig.getData('Path of the file','medicalclaims1')
+   ingest_file=ReadConfig.getData("Path of the file","fileheader"),primarypath,secondarypath,ReadConfig.getData("Path of the file","trailerheader"))
+   move_old_reports=ReadConfig.getData('Path of the file','report_path'),ReadConfig.getData('Path of the file','destination_path'))
+   gluestatus(Jobname)
+
+elif "Member Roster" in PrescenceCheck:
+   list_bucket()
+   print("Medical Claims")
+   Jobname=ReadConfig.getData('Path of the file','Memberrosterglue')
+   primarypath=ReadConfig.getData('Path of the file','memberroster1_rt')
+   ingest_file=ReadConfig.getData("Path of the file","fileheader"),primarypath)
+   move_old_reports=ReadConfig.getData('Path of the file','report_path'),ReadConfig.getData('Path of the file','destination_path'))
+   gluestatus(Jobname)
+
+elif "PCP" in PrescenceCheck:
+   list_bucket()
+   Jobname=ReadConfig.getData('Path of the file','pcpglue')
+   primarypath=ReadConfig.getData('Path of the file','rxclaimingestion1_rt')
+   secondarypath=ReadConfig.getData('Path of the file','pcpintake')
+   ingest_file=ReadConfig.getData("Path of the file","fileheader"),primarypath,secondarypath)
+   move_old_reports=ReadConfig.getData('Path of the file','report_path'),ReadConfig.getData('Path of the file','destination_path'))
+   gluestatus(Jobname)
         
         
         
